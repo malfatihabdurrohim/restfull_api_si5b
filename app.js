@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 
 // ---------- Route per modul ----------
 app.use('/mahasiswa', mahasiswaRoutes);
-app.use('./fakultas',fakultasRoutes);
+app.use('/fakultas',fakultasRoutes);
 
 // ---------- Handler 404 dan error handler (paling bawah) ----------
 app.use(notFoundHandler);
