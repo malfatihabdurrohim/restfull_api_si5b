@@ -1,6 +1,6 @@
 let prodi = [
-  { id: 1, nama: 'Sistem Informasi', jenjang: 'S1', fakultasId: 1 },
-  { id: 2, nama: 'Informatika', jenjang: 'S1', fakultasId: 1 },
+  { id: 1, nama: "Sistem Informasi", jenjang: "S1", fakultasId: 1 },
+  { id: 2, nama: "Informatika", jenjang: "S1", fakultasId: 1 },
 ];
 let nextId = 3;
 
