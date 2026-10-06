@@ -7,6 +7,7 @@ const logger = require('./middlewares/logger');
 const { notFoundHandler, errorHandler } = require('./middlewares/errorHandler');
 
 const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
+const fakultasRoutes = require('./routes/fakultasRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
