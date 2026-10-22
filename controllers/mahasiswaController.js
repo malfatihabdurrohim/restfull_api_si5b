@@ -1,6 +1,17 @@
 const Mahasiswa = require('../models/mahasiswaModel');
 const { errorHttp } = require('../middlewares/errorHandler');
 
+const LIMIT_DEFAULT = 10;
+const LIMIT_MAKS = 50;
+
+// Mengubah bilangan dari query string menjadi bilangan bulat yang aman
+function angkaAman(nilai, bawaan, min, maks) {
+  const n = parseInt(nilai, 10);
+  if (Number.isNaN(n)) return bawaan;
+  return Math.min(Math.max(n, min), maks);
+}
+
+
 exports.create = async (req, res) => {
   try {
     const mahasiswa = await Mahasiswa.create(req.body);
