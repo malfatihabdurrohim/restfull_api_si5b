@@ -26,8 +26,14 @@ exports.create = async (req, res) => {
   if (req.query.kota) {
     filter['alamat.kota'] = String(req.query.kota);
   }
-  const data = await Mahasiswa.find(filter).populate('prodiId');
-  res.json(data);
+  const [data, total] = await Promise.all([
+    Mahasiswa.find(filter)
+      .populate('prodiId', 'kode nama')
+      .sort({ createdAt: -1, _id: 1 })
+      .skip((page - 1) * limit)
+      .limit(limit),
+    Mahasiswa.countDocuments(filter),
+  ]);
 };
 
 exports.getById = async (req, res) => {
