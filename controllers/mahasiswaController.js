@@ -10,8 +10,12 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.getAll = async (req, res) => {
-  const data = await Mahasiswa.find().populate('prodiId');
+  exports.getAll = async (req, res) => {
+  const filter = {};
+  if (req.query.kota) {
+    filter['alamat.kota'] = String(req.query.kota);
+  }
+  const data = await Mahasiswa.find(filter).populate('prodiId');
   res.json(data);
 };
 
