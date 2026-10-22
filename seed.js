@@ -12,7 +12,7 @@ const NAMA = ['Andi', 'Budi', 'Citra', 'Dewi', 'Eko', 'Fitri', 'Gita', 'Hadi', '
 const KOTA = ['Palembang', 'Indralaya', 'Prabumulih', 'Lubuklinggau'];
 
 async function main() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect(process.env.DB_URI);
   await Mahasiswa.deleteMany({});
   await Prodi.deleteMany({});
 
