@@ -26,6 +26,10 @@ exports.create = async (req, res) => {
   if (req.query.kota) {
     filter['alamat.kota'] = String(req.query.kota);
   }
+
+const page = angkaAman(req.query.page, 1, 1, Number.MAX_SAFE_INTEGER);
+const limit = angkaAman(req.query.limit, LIMIT_DEFAULT, 1, LIMIT_MAKS);
+
   const [data, total] = await Promise.all([
     Mahasiswa.find(filter)
       .populate('prodiId', 'kode nama')
