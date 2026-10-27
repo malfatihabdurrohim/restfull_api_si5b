@@ -3,6 +3,7 @@ const { errorHttp } = require('../middlewares/errorHandler');
 
 const LIMIT_DEFAULT = 10;
 const LIMIT_MAKS = 50;
+const FIELD_SORT = ['nama', 'nim', 'createdAt'];
 
 // Mengubah bilangan dari query string menjadi bilangan bulat yang aman
 function angkaAman(nilai, bawaan, min, maks) {
@@ -30,14 +31,25 @@ exports.create = async (req, res) => {
 const page = angkaAman(req.query.page, 1, 1, Number.MAX_SAFE_INTEGER);
 const limit = angkaAman(req.query.limit, LIMIT_DEFAULT, 1, LIMIT_MAKS);
 
+  // Sorting: ?sort=nama (naik) atau ?sort=-nama (turun). Bawaan: terbaru dulu
+  const sortParam = String(req.query.sort || '-createdAt');
+  const arah = sortParam.startsWith('-') ? -1 : 1;
+  const sortField = sortParam.replace(/^-/, '');
+  if (!FIELD_SORT.includes(sortField)) {
+    throw errorHttp(400, `sort hanya boleh: ${FIELD_SORT.join(', ')}`);
+  }
+
   const [data, total] = await Promise.all([
     Mahasiswa.find(filter)
       .populate('prodiId', 'kode nama')
-      .sort({ createdAt: -1, _id: 1 })
+      .sort({ [sortField]: arah, _id: 1 })
       .skip((page - 1) * limit)
       .limit(limit),
     Mahasiswa.countDocuments(filter),
   ]);
+
+  res.json({ data, page, limit, total, totalPages: Math.ceil(total / limit) });
+  
 };
 
 exports.getById = async (req, res) => {
@@ -61,3 +73,4 @@ exports.remove = async (req, res) => {
   if (!data) throw errorHttp(404, 'Data tidak ditemukan');
   res.status(204).send();
 };
+
