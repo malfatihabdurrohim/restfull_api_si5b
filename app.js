@@ -11,7 +11,8 @@ const mahasiswaRoutes = require('./routes/mahasiswaRoutes');
 const fakultasRoutes = require('./routes/fakultasRoutes');
 const prodiRoutes = require('./routes/prodiRoutes');
 const dosenRoutes = require('./routes/dosenRoutes');
-const authRoutes = require('./routes/authRoutes'); 
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 if (!process.env.JWT_SECRET) {
   console.error('JWT_SECRET belum diisi di .env');
@@ -46,7 +47,7 @@ app.use('/fakultas',fakultasRoutes);
 app.use('/prodi', prodiRoutes);
 app.use('/dosen', dosenRoutes);
 app.use('/auth', authRoutes);
-
+app.use('/users', userRoutes);
 // ---------- Handler 404 dan error handler (paling bawah) ----------
 app.use(notFoundHandler);
 app.use(errorHandler);
